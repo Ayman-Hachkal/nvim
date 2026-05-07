@@ -9,7 +9,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "jdtls", "basedpyright", "glsl_analyzer"},
+				ensure_installed = { "lua_ls", "jdtls", "glsl_analyzer", "ruff", "pyrefly"},
 			})
 		end,
 	},
@@ -29,26 +29,28 @@ return {
         capabilities = capabilities,
       })
       vim.lsp.enable({"jdtls"})
-      pyright = vim.lsp.config("basedpyright", {
+
+      vim.lsp.config("pyrefly", {
         capabilities = capabilities,
         settings = {
-                basedpyright = {
-                    reportMissingTypeStubs = false,
-                    analysis = {
-                        typeCheckingMode = "standard",      -- less strict type checking
-                        diagnosticMode = "openFilesOnly",-- only report warnings in open files
-                        useLibraryCodeForTypes = true,  -- ignore types from libraries to reduce false positives
-                        autoSearchPaths = true, -- Autolooks through venv path
-                        inlayHints = {
-                            variableTypes = true,
-                            functionReturnTypes = true,
-                            callArgumentNames = true,
-                        },
-                    },
-                },
+          python = {
+            analysis = {
+              inlayHints = {
+                variableTypes = true,
+                functionReturnTypes = true,
+                callArgumentNames = "off",
+                pytestParameters = true,
+              },
             },
-        })
-      vim.lsp.enable({"basedpyright"})
+          },
+        },
+      })
+      vim.lsp.enable({"pyrefly"})
+      
+      vim.lsp.config("ruff", {
+        capabilities = capabilities,
+      })
+      vim.lsp.enable({"ruff"})
       
       --clangd 
       vim.lsp.config("clangd", {
@@ -63,10 +65,12 @@ return {
 
       vim.lsp.enable({"glsl_analyzer"})
 
+      vim.lsp.inlay_hint.enable(true)
       -- keybinds
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, {})
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+			vim.keymap.set("n", "<leader>ci", vim.lsp.buf.implementation, {})
       vim.diagnostic.config({ virtual_text = false, virtual_text= { current_line = true }, })
 
 		end,

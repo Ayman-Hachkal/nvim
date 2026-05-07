@@ -1,7 +1,6 @@
 return {
   "folke/snacks.nvim", priority = 1000,
-  lazy = false,
-  ---@type snacks.Config
+  lazy = false, ---@type snacks.Config
   opts = {
     animate = { enabled = true },
     bigfile = { enabled = true },
@@ -10,7 +9,7 @@ return {
       sections = {
       {
         section = "terminal",
-        cmd = "chafa /Users/aymanhachkal/Documents/Wallpaper/Untitled_Artwork+59.jpg ; sleep .1",
+        cmd = "chafa /home/ayman/Pictures/Wallpaper/AT_Fire.jpg; sleep .1",
         height = 17,
         padding = 1,
       },
@@ -22,21 +21,36 @@ return {
     },
     },
     indent = { enabled = true },
+    image = {enabled = true},
     input = { enabled = true },
     notifier = { enabled = true },
     quickfile = { enabled = true },
     scroll = { enabled = false},
     statuscolumn = { enabled = false },
     words = { enabled = true },
-    dim = { enabled = true},
+    dim = { enabled = false},
     terminal = {
       enabled = true,
       auto_close = false, 
       win = {
         position = "float", -- or "bottom"
         border = "rounded",
+        winblend = 10,
         },
       },
+    picker = {
+      win = {
+        input = {
+          winblend = 10,
+        },
+        list = {
+          winblend = 10,
+        },
+        preview = {
+          winblend = 10,
+        },
+      },
+    },
   },
   keys = {
     { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
