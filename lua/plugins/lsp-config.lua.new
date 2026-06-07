@@ -1,6 +1,7 @@
 return {
 	{
-		"williamboman/mason.nvim", config = function()
+		"williamboman/mason.nvim",
+		config = function()
 			require("mason").setup()
 		end,
 	},
@@ -67,13 +68,9 @@ return {
 
       vim.lsp.inlay_hint.enable(true)
       -- keybinds
-      vim.keymap.set("n", "K", function()
-        vim.lsp.buf.hover({ border = "rounded" })
-      end, {})
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-      vim.keymap.set("i", "<C-k>", function()
-        vim.lsp.buf.signature_help({ border = "rounded" })
-      end, {})
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signatureHelp, { border = "rounded" })
+			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.diagnostic.config({
         virtual_text = { current_line = true },
         float = { border = "rounded" },
